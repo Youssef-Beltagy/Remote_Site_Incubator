@@ -1,0 +1,9 @@
+TRY SD card one last time with your esp32 -- if it fails, I will switch to Arduino.
+
+ADD RTC (to record time) module
+
+Use the sensors that Jeff will provide me tomorrow to test the flow meter, and calibrate if necessary.
+
+ADD sleep mode.
+
+Use the sensors that Jeff will provide me tomorrow to test the temp sensor and the turbidity sensor, in this order, to the best of my abilities.
