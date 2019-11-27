@@ -33,7 +33,7 @@ void loop ()
     Serial.print(now.minute(), DEC);
     Serial.print(':');
     Serial.print(now.second(), DEC);
-    Serial.println();
+    Serial.println(')');
     
     delay(1000);
 }

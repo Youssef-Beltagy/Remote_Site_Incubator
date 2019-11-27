@@ -1,5 +1,5 @@
 
-const byte interruptPin = 2;
+const byte interruptPin = 3;
 volatile unsigned short int count = 0;
 
 volatile unsigned long ltime = millis();

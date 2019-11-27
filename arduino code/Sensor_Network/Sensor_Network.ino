@@ -1,4 +1,4 @@
-//#include <stdint.h>// for clarity in data types
+#include <stdint.h>// for clarity in data types
 
 #include <Wire.h> // for RTC module
 #include "RTClib.h"
@@ -12,11 +12,11 @@
 
 // Global Variables for use throughout the program
 
-//File myFile; // initialize file
+File myFile; // initialize file
 
-RTC_DS3231 * rtc = new rtc(); // initialize clock
+RTC_DS3231 rtc; // initialize clock
 
-Adafruit_SSD1306 * display =  new Adafruit_SSD1306(128, 64, &Wire); // initialize OLED display
+Adafruit_SSD1306 display(128, 64, &Wire); // initialize OLED display
 
 
 //------------------------------------------------------------
@@ -26,16 +26,27 @@ Adafruit_SSD1306 * display =  new Adafruit_SSD1306(128, 64, &Wire); // initializ
 
 
 //---------------------Clean this up later by making libraries and classes----------------
-const PROGMEM byte counterPin = 3; // fish counter pin                                //
-const PROGMEM byte flowPin = 2; // flowmeter pin                                      //
-const PROGMEM byte secToAvg = 10; // seconds to measure flow and get average          //
+                                //
+                                     //
+const PROGMEM uint8_t secToAvg = 10; // seconds to measure flow and get average          //
                                                                                          //
-volatile unsigned int fishCount = 0; // number of fish counted till now                      //
-volatile unsigned int flowPulses = 0; // number of flow-meter pulses                         //
+const PROGMEM uint8_t flowPin = 2; // flowmeter pin 
+volatile uint16_t flowPulses = 0; // number of flow-meter pulses                         //
+
+const PROGMEM uint8_t counterPin = 3; // fish counter pin
+volatile uint16_t fishCount = 0; // number of fish counted till now                      //
+volatile unsigned long ltime = millis();
+const long LowerTimeThr = 6; // set arbitrarily for now (and ever). A HACK
+const long UpperTimeThr = 1000;
+
                                                                                          //
-void countFish(){                                                                        //
-  ++fishCount;                                                                           //
-}                                                                                        //
+void countFish() {
+  if(digitalRead(counterPin) == HIGH){// What about if LOW and time is not
+    ltime = millis();
+  }else if(digitalRead(counterPin) == LOW && (millis() - ltime > LowerTimeThr) && (millis() - ltime < UpperTimeThr)){// Consider ltime - millis in large values like 100000
+    fishCount++;
+  }
+}                                                                                       //
                                                                                          //
 void incrementPulses(){                                                                  //
   ++flowPulses;                                                                          //
@@ -48,7 +59,7 @@ double getFlow(){
   // attach the interrupt for the fish counter
   
   flowPulses = 0;// reset counter 
-  
+
   attachInterrupt(digitalPinToInterrupt(flowPin), incrementPulses, RISING);
   
   delay(1000 * secToAvg);// wait some time and get the average
@@ -61,13 +72,16 @@ double getFlow(){
 
 void setup () 
 {
-
+  //--------------------------
   Serial.begin(9600);
-  delay(10);
-  Serial.println("hello");
+  
   //---------------------Clean this up later by making libraries and classes----------------
   // attach the interrupt for the fish counter
-  attachInterrupt(digitalPinToInterrupt(counterPin), countFish, RISING);
+
+  pinMode(counterPin, INPUT);
+  pinMode(flowPin, INPUT);
+  
+  attachInterrupt(digitalPinToInterrupt(counterPin), countFish, CHANGE);
     
   //-----------------------------------------------------------------------------------------
  
@@ -107,7 +121,7 @@ void loop ()
 
   // get sensor data
   double flow = getFlow();
-  unsigned int count = fishCount;  
+  uint16_t count = fishCount;  
   
   DateTime now = rtc.now(); // get current time
 
@@ -117,12 +131,14 @@ void loop ()
 
   // print reading to OLED screen
   display.println("Last Reading:");
-  display.println(now.year(), DEC);
+  display.display();
+  display.print(now.year(), DEC);
   display.print('/');
-  display.println(now.month(), DEC);
+  display.print(now.month(), DEC);
   display.print('/');
-  display.print(now.day(), DEC);
-  display.print(" ");
+  display.println(now.day(), DEC);
+  
+  
   display.display();
   
   display.print(now.hour(), DEC);
@@ -140,12 +156,12 @@ void loop ()
 
   //--------------------------------------------------
   Serial.println("Last Reading:");
-  Serial.println(now.year(), DEC);
+  Serial.print(now.year(), DEC);
   Serial.print('/');
   Serial.println(now.month(), DEC);
   Serial.print('/');
   Serial.print(now.day(), DEC);
-  Serial.print(" "); 
+  Serial.println(); 
   Serial.print(now.hour(), DEC);
   Serial.print(':');
   Serial.print(now.minute(), DEC);
@@ -163,30 +179,33 @@ void loop ()
   // time, but when I used to do it, I would get corrupted
   // data after some time.
   
-//  myFile = SD.open("TDATA.txt", FILE_WRITE);
-//
-//  if(!myFile){
-//    display.println("Failed to write to file");
-//    display.display();
-//  }else{
-//    myFile.print(now.year(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.month(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.day(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.hour(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.minute(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.second(), DEC);
-//    myFile.print(',');
-//    myFile.print(count);
-//    myFile.print(',');
-//    myFile.println(flow);
-//    
-//    myFile.close();
-//  }
+  myFile = SD.open("TDATA.txt", FILE_WRITE);
+
+  if(!myFile){//---------------------file checking doesn't work if I remove sd card in middle of operation.
+    display.println("File Write Failed");
+    display.display();
+  }else{
+    display.println("Can Write to File");
+    display.display();
+    
+    myFile.print(now.year(), DEC);
+    myFile.print(',');
+    myFile.print(now.month(), DEC);
+    myFile.print(',');
+    myFile.print(now.day(), DEC);
+    myFile.print(',');
+    myFile.print(now.hour(), DEC);
+    myFile.print(',');
+    myFile.print(now.minute(), DEC);
+    myFile.print(',');
+    myFile.print(now.second(), DEC);
+    myFile.print(',');
+    myFile.print(count);
+    myFile.print(',');
+    myFile.println(flow);
+    
+    myFile.close();
+  }
   
   delay(100);
 }
