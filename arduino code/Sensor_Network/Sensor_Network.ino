@@ -72,7 +72,7 @@ double getFlow(){
 
 void setup () 
 {
-  //--------------------------
+  //--------------------------Delete Serial before deployment---------------
   Serial.begin(9600);
   
   //---------------------Clean this up later by making libraries and classes----------------
@@ -99,16 +99,16 @@ void setup ()
   // check that the clock was initialized successfully.
   if (! rtc.begin()) {
     display.println("Cf"); // print failed to initialize clock
-    // how do I handle failures? try agian? There is no guarantee of success --------------------------------
+    // how do I handle failures? try agian? There is no guarantee of success. --------------As of right now, I'm printing to OLED the failures.
   }else{
     display.println("CS");
   }
 
   // check that the sd card was initialized successfully
   if (!SD.begin()) {
-    display.println("SDf"); // print failed to initialize SD module
+    display.println("SDF"); // print failed to initialize SD module
   }else{
-    display.println("SDS");
+    display.println("SDS"); // for some reason this reminds me with Sozialistische Deutsche Studentenbund
   }
   
   display.display();
@@ -154,7 +154,7 @@ void loop ()
   display.println(count);
   display.display();
 
-  //--------------------------------------------------
+  //--------------------------------------------------delete before deployment
   Serial.println("Last Reading:");
   Serial.print(now.year(), DEC);
   Serial.print('/');
@@ -181,7 +181,7 @@ void loop ()
   
   myFile = SD.open("TDATA.txt", FILE_WRITE);
 
-  if(!myFile){//---------------------file checking doesn't work if I remove sd card in middle of operation.
+  if(!myFile){//---------------------file checking doesn't work if I remove sd card in middle of operation.-----test why
     display.println("File Write Failed");
     display.display();
   }else{
