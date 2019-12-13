@@ -1,11 +1,7 @@
-# Progress  (or lack thereof) Report
+# Progress Report
 ### By **Youssef Beltagy** and **Mike Miller**
 
-> I spent two hours and half writing the report on google chrome, then I accidentally pressed the F5 button and lost everything. So here is what I managed to redo today.
----
-Lesson Learned: don't work in an environment that doesn't save your progress, even temporarily.
----
-
+This is the documentation for the Remote site Incubator project.
 
 ## Objective 
 We want to build a sensor-system (we call it *the fish counter*) to observe and document the hatching conditions of fish. For now, we know that we need to deploy a prototype for coho salmon sometime in January of 2020. Later on, we expect that the sensor system would be used to observe Kokanee salmon in the Lake Washington/Sammamish watershed. This project is sponsored by [Jeff Jensen, Ph.D](https://www.uwb.edu/biological-sciences/faculty/biology/jjensen).
@@ -29,31 +25,51 @@ Jeff also wants to be able to install the incubator where our fish counter would
 2. Access to power
 
 ## TimeLine
+In here we will explain what we did this quarter, both as a group and as individuals.
 
 **September**
 >Mike, write what you did in september. Things like defining the problem---------------------------
 
 **October**
->Mike, write what you did in october before I came. Things like defining the problem---------------------------
+>Mike, write what you did in october before I came. Things like how you had to choose the sensor
+
+In October, we contacted graduate students in UW Seattle to get their opinion about which sensors to use. We finalized our Bill of Material and sent it to Jeff. We got the sensors the last couple of days of October.
 
 **November**
+ideas to write
+Learn how to use sensors.
+Temperature
+Decided to add SD card writer
+Decided to add RTC
+Decided to add OLED
+Made the Fish counter, wrote the code for it and tested it.
+Demoed it to jeff
 
 **December**
+Ideas to write
+went to see deployment location with jeff
+Wrote report
 
 
 ### Youssef
 
 **September**
+Not reqruited yet.
 
 **October**
+Joined the project, met jeff, and helped decide on sensors.
 
 **November**
+Added SD, RTC, OLED, flow, code for fish counter.
+Demoed it to jeff
 
 **December**
+Wrote report
 
 
 
 ### Mike
+> Write your individual contributions here
 
 **September**
 
@@ -65,10 +81,16 @@ Jeff also wants to be able to install the incubator where our fish counter would
 
 
 ## Current Prototype
-
+>write all information needed to know about current prototype
 
 ## Next steps
+> next steps in the project
 
+### Youssef
+> next steps for me
+
+### Mike 
+> next steps for you
 
 
 
@@ -78,8 +100,10 @@ Jeff also wants to be able to install the incubator where our fish counter would
 
 
 # Appendix
+> anything else we want to say
 
 ## Sensor Choice reasoning and current progress
+> explanation of why we chose every specific sensor and any information needed to know about the sensor. Don't worry about the technical details. It is too early for that.
 
 **Fish Counter**
 
