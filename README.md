@@ -5,7 +5,7 @@ This is the documentation for the Remote site Incubator (RSI) project.
 
 
 ## Objective 
-We want to build a sensor-system to observe and document the hatching conditions of fish. For now, we know that we need to deploy a prototype for Coho salmon sometime in January of 2020. Later on, we expect that the sensor system would be used to observe Kokanee salmon in the Lake Washington/Sammamish watershed. This project is sponsored by [Jeff Jensen, Ph.D](https://www.uwb.edu/biological-sciences/faculty/biology/jjensen).
+We want to build a sensor-system to observe and document the hatching conditions of fish. For now, we know that we need to deploy a prototype for Coho salmon sometime in January of 2020. Later on, we expect that the sensor system will be used to observe Kokanee salmon in the Lake Washington/Sammamish watershed. This project is sponsored by [Jeff Jensen, Ph.D](https://www.uwb.edu/biological-sciences/faculty/biology/jjensen).
 
 
 ## Motivation
@@ -31,7 +31,7 @@ Jeff wants to be able to install the incubator where our fish counter would not 
 1. Communication without WiFi
 2. Access to power without the power-grid
 
-Ideally, we would also like to make a friendly user interface, but our focus is for the RSI to output a comma delimited file that can be used by data analysis software.
+Ideally, we would also like to make a user-friendly interface, but our focus is for the RSI to output a comma delimited file that can be used by data analysis software.
 
 
 ## Progress
@@ -71,6 +71,14 @@ In here we include more information about each sensor, any module that we used, 
 
 ### Sensors
 
+**Remote Communication**
+
+For remote communications, our initial research showed us that we can use two approaches:
+- [Phone Network](https://www.adafruit.com/product/1963)
+- [Satellite Internet](https://www.rock7.com/products-rockblock)
+
+The links are just examples of what we can use. We think the satellite internet solution would be too expensive to use. We will likely use the Phone network solution.
+
 **Fish Counter**
 
 This sensor was custom build for this project. It is an IR light-gate. It is a photo-diode directly in front of an IR diode. Normally the photodiode outputs a high voltage. But when something blocks the IR light to it, it outputs a lower voltage. The output from photodiode is noisy, though, so we have a schmidt trigger with a capacitor to output clean Digital HIGH/LOW signals. The hardware part of the sensor should output a HIGH value when it detects a fish.
@@ -108,7 +116,4 @@ We added a real-time-clock module to keep track of time even if the microprocess
 **OLED Screen**
 
 We added a small screen to know whether the system is working or not without needing a computer.
-
-
-**Remote Communication**
 
