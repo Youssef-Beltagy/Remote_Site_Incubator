@@ -109,11 +109,17 @@ This sensor works by counting the number of rotations of a turbine.
 
 **Temperature**
 
+We implemented the code for this sensor but didn't add it to the prototype because the only functional sensor wasn't with us at the time.
+
 
 **Turbidity**
 
+We have not added that sensor yet. This sensor can be calibrated, but it was tested with 5V input. If we can't supply and measure 5V, this sensor might become tricky.
+
 
 **PH**
+
+We have not added that sensor yet.
 
 
 **Dissolved Oxygen**
