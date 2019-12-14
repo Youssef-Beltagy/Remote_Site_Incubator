@@ -44,27 +44,71 @@ We demoed what we had to Jeff and got his feedback. Jeff explained that the fish
 We went with Jeff to see where the first RSI (the one that will be deployed in January) will be located. Fortunately, for the first deployment, we will have access to a power socket so we can focus on the data-collection and transmission system for now. When we have a satisfactory data collection and transmission system, we will focus on finding a solution to the power problem.
 
 
-# Appendix
-> anything else we want to say
+## Intended Next Steps
+- Research and add module for remote communication (please see the appendix)
+- Widen the fish-counter sensor and make more of it.
+- Add Turbidity Sensor
+- Add PH Sensor
+- Add Dissolved Oxygen Sensor
 
-## Sensor Choice reasoning and current progress
-> explanation of why we chose every specific sensor and any information needed to know about the sensor. Don't worry about the technical details. It is too early for that.
+- Test all sensors and make excel sheets of our sensor vs calibrated sensor from labs
+- check whether the sensors should be used, calibrated, or eliminated.
+
+- Measure the *typical* power draw of the system
+- Assess feasibility of using solar panels
+- Assess battery options and feasibility of using disposable battery
+
+- Clean the code and refactor it
+- Make classes and libraries for the flow-meter and fish-counter
+- Document how to use the system and put everything in one location so Jeff can easily use it
+- Make it really easy to use so Jeff would give it to others as well
+
+
+
+## Appendix
+In here we include more information about each sensor, any module that we used, and any other details. It is still a work on progress, so please excuse me, Harry. I don't intend to finish this part until we tested every sensor and are satisfied with them.
+
+
+### Sensors
 
 **Fish Counter**
 
+This sensor was custom build for this project. It is an IR light-gate. It is a photo-diode directly in front of an IR diode. Normally the photodiode outputs a high voltage. But when something blocks the IR light to it, it outputs a lower voltage. The output from photodiode is noisy, though, so we have a schmidt trigger with a capacitor to output clean Digital HIGH/LOW signals. The hardware part of the sensor should output a HIGH value when it detects a fish.
+
+On the software side, we use interrupts to measure the time between when the signal went from LOW-to-HIGH and then back again to HIGH-to-LOW. We use this time to disregard noise. If the time is not too shor or too long (you set time thresholds), we know we detected a fish.
+
+
 **Flow**
+
 
 **Temperature**
 
+
 **Turbidity**
+
 
 **PH**
 
+
 **Dissolved Oxygen**
+
+This sensor needs Maintainence every month or so.
+
 
 **SD card module**
 
+We store our comma separated text file in a micro SD card. We need this module.
+
+
 **RTC**
 
+We added a real-time-clock module to keep track of time even if the microprocessor is rebooted.
+
+
 **OLED Screen**
+
+We added a small screen to know whether the system is working or not without needing a computer.
+
+
+**Remote Communication**
 
