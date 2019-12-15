@@ -59,7 +59,7 @@ This is an up close image of what the screen prints.
 ### Deployment Location
 
 This is where the RSI will be placed. A kind couple will allow us to put it under their porch.
-![Image of deployment location](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Images/Deployment_Location.jpg2)
+![Image of deployment location](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Images/Deployment_Location2.jpg2)
 
 
 ## Next Steps
