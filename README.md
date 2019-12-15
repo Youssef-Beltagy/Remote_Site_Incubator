@@ -50,16 +50,16 @@ We went with Jeff to see where the first RSI (the one that will be deployed in J
 ### Demo
 
 This is the current prototype (I took this picture at home, so it doesn't have the fish-counter, but we demoed with the fish-counter). When we deploy it, we will use a PCB to get rid of the Wires.
-![Demo](../Images/Demo1.jpg)
+![Demo](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Images/Demo1.jpg)
 
 This is an up close image of what the screen prints.
-![Demo up-close](../Images/Demo3.jpg)
+![Demo up-close](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Images/Demo3.jpg)
 
 
 ### Deployment Location
 
 This is where the RSI will be placed. A kind couple will allow us to put it under their porch.
-![Image of deployment location](../Images/Deployment_Location.jpg2)
+![Image of deployment location](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Images/Deployment_Location.jpg2)
 
 
 ## Next Steps
@@ -114,7 +114,7 @@ This sensor was custom build for this project. It is an IR light-gate. It is a p
 
 On the software side, we use interrupts to measure the time between when the signal went from LOW-to-HIGH and then back again to HIGH-to-LOW. We use this time to disregard noise. If the time is not too shor or too long (you set time thresholds), we know we detected a fish.
 
-![Image of fish-counter](../Images/Fish_Counter.jpg)
+![Image of fish-counter](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Images/Fish_Counter.jpg)
 
 
 **Flow**
