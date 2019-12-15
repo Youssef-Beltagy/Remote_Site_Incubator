@@ -50,16 +50,19 @@ We went with Jeff to see where the first RSI (the one that will be deployed in J
 ### Demo
 
 This is the current prototype (I took this picture at home, so it doesn't have the fish-counter, but we demoed with the fish-counter). When we deploy it, we will use a PCB to get rid of the Wires.
+
 ![Demo](https://raw.githubusercontent.com/Youssef-Beltagy/Remote_Site_Incubator/master/Images/Demo1.jpg)
 
+
 This is an up close image of what the screen prints.
+
 ![Demo up-close](https://raw.githubusercontent.com/Youssef-Beltagy/Remote_Site_Incubator/master/Images/Demo3.jpg)
 
 
 ### Deployment Location
 
 This is where the RSI will be placed. A kind couple will allow us to put it under their porch.
-![Image of deployment location](https://raw.githubusercontent.com/Youssef-Beltagy/Remote_Site_Incubator/master/Images/Deployment_Location2.jpg2)
+![Image of deployment location](https://raw.githubusercontent.com/Youssef-Beltagy/Remote_Site_Incubator/master/Images/Deployment_Location2.jpg)
 
 
 ## Next Steps
