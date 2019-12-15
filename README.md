@@ -70,29 +70,29 @@ Organized by category
 
 
 ### Data Collection and Transmission
-- Research and add module for remote communication (please see the appendix)
-- Widen the fish-counter sensor and make more of it.
-- Add Turbidity Sensor
-- Add PH Sensor
-- Add Dissolved Oxygen Sensor
+[ ] Research and add module for remote communication (please see the appendix)
+[ ] Widen the fish-counter sensor and make more of it.
+[ ] Add Turbidity Sensor
+[ ] Add PH Sensor
+[ ] Add Dissolved Oxygen Sensor
 
 
 ### Data Integrity
-- Test all sensors and make excel sheets of our sensor vs calibrated sensor from labs
-- check whether the sensors should be used, calibrated, or eliminated.
+[ ] Test all sensors and make excel sheets of our sensor vs calibrated sensor from labs
+[ ] check whether the sensors should be used, calibrated, or eliminated.
 
 
 ### Power
-- Measure the *typical* power draw of the system
-- Assess feasibility of using solar panels
-- Assess battery options and feasibility of using disposable battery
+[ ] Measure the *typical* power draw of the system
+[ ] Assess feasibility of using solar panels
+[ ] Assess battery options and feasibility of using disposable battery
 
 
 ### Usability and Maintainability
-- Clean the code and refactor it
-- Make classes and libraries for the flow-meter and fish-counter
-- Document how to use the system and put everything in one location so Jeff can easily use it
-- Make it really easy to use so Jeff would give it to others as well
+[ ] Clean the code and refactor it
+[ ] Make classes and libraries for the flow-meter and fish-counter
+[ ] Document how to use the system and put everything in one location so Jeff can easily use it
+[ ] Make it really easy to use so Jeff would give it to others as well
 
 
 
