@@ -6,7 +6,7 @@ This is the documentation for the Remote site Incubator (RSI) project.
 
 
 ## Objective 
-We want to build a sensor-system to observe and document the hatching conditions of fish. For now, we know that we need to deploy a prototype for Coho salmon sometime in January of 2020. Later on, the sensor system will be used to observe Kokanee salmon in the Lake Washington/Sammamish watershed. This project is sponsored by [Jeff Jensen, Ph.D](https://www.uwb.edu/biological-sciences/faculty/biology/jjensen).
+We want to build a sensor-system to observe and document the hatching conditions of fish. For now, we know that we need to deploy a prototype for Coho salmon sometime in January of 2020. Later on, the sensor system will be used to observe Kokanee salmon in the Lake Washington/Sammamish watershed. This project is sponsored by [Jeff Jensen, Ph.D](https://www.uwb.edu/biological-sciences/faculty/biology/jjensen), and supervised by [Hrair Aintablian, Ph.D](https://www.uwb.edu/engineering-math/faculty/electrical-engineering/haintablian).
 
 
 
@@ -71,7 +71,7 @@ Organized by category
 
 ### Data Collection and Transmission
 + [ ] Research and add module for remote communication (please see the appendix)
-+ [ ] Widen the fish-counter sensor and make more of it.
++ [ ] Widen the fish-counter sensor and make more of it
 + [ ] Add Turbidity Sensor
 + [ ] Add PH Sensor
 + [ ] Add Dissolved Oxygen Sensor
@@ -79,7 +79,7 @@ Organized by category
 
 ### Data Integrity
 + [ ] Test all sensors and make excel sheets of our sensor vs calibrated sensor from labs
-+ [ ] check whether the sensors should be used, calibrated, or eliminated.
++ [ ] check whether the sensors should be used, calibrated, or eliminated
 
 
 ### Power
