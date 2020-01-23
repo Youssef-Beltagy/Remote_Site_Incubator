@@ -3,6 +3,10 @@
 #include <Wire.h> // for RTC module
 #include "RTClib.h"
 
+// Include the libraries we need
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
 #include <SPI.h>// For SD card module
 #include <SD.h>
 
@@ -28,7 +32,7 @@ Adafruit_SSD1306 display(128, 64, &Wire); // initialize OLED display
 //---------------------Clean this up later by making libraries and classes----------------
                                 //
                                      //
-const PROGMEM uint8_t secToAvg = 10; // seconds to measure flow and get average          //
+const PROGMEM uint8_t secToAvg = 1; // seconds to measure flow and get average          //
                                                                                          //
 const PROGMEM uint8_t flowPin = 2; // flowmeter pin 
 volatile uint16_t flowPulses = 0; // number of flow-meter pulses                         //
@@ -69,6 +73,16 @@ double getFlow(){
   return (double) flowPulses/ (double) (secToAvg);
 }
 //-----------------------------------------------------------------------------------------
+
+
+
+const uint8_t ONE_WIRE_BUS = 2;
+// Setup a oneWire instance to communicate with any OneWire devices (not just Maxim/Dallas temperature ICs)
+OneWire oneWire(ONE_WIRE_BUS);
+
+// Pass our oneWire reference to Dallas Temperature. 
+DallasTemperature sensors(&oneWire);
+
 
 void setup () 
 {
@@ -113,6 +127,10 @@ void setup ()
   
   display.display();
   delay(5000);
+
+
+  //----------------------------------------------------------------------------
+  sensors.begin();
   
 }
 
@@ -171,6 +189,35 @@ void loop ()
   Serial.println(flow);
   Serial.print("FishCount: ");
   Serial.println(count);
+
+
+  //----------------------------------------------------------------------------------------
+
+
+
+// call sensors.requestTemperatures() to issue a global temperature 
+  // request to all devices on the bus
+  sensors.requestTemperatures(); // Send the command to get temperatures
+
+  
+  // After we got the temperatures, we can print them here.
+  // We use the function ByIndex, and as an example get the temperature from the first sensor only.
+  float tempC = sensors.getTempCByIndex(0);
+
+  // Check if reading was successful
+  if(tempC != DEVICE_DISCONNECTED_C) 
+  {
+    Serial.print("Temperature for the device 1 (index 0) is: ");
+    Serial.println(tempC);
+  } 
+  else
+  {
+    Serial.println("Error: Could not read temperature data");
+  }
+
+
+
+  //---------------------------------------------------------------------------------------
   
 
   // open the file. Only one file can be open at a time,

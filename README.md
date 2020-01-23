@@ -1,9 +1,11 @@
 # Progress Report for RSI
 ### By **Youssef Beltagy** and **Mike Miller**
 
-This is the documentation for the Remote site Incubator (RSI) project.
+This is the documentation for the Remote site Incubator (RSI) project. For up to date information on my daily suffering, please go to the Progress Reports Folder.
 
+The most up to date code is the Sensors_Network in the esp32 code Folder. I may have uploaded it in the middle of a debugging session. so it doesn't necessarily work, cheers!
 
+I love my life.
 
 ## Objective 
 We want to build a sensor-system to observe and document the hatching conditions of fish. For now, we know that we need to deploy a prototype for Coho salmon sometime in January of 2020. Later on, the sensor system will be used to observe Kokanee salmon in the Lake Washington/Sammamish watershed. This project is sponsored by [Jeff Jensen, Ph.D](https://www.uwb.edu/biological-sciences/faculty/biology/jjensen), and supervised by [Hrair Aintablian, Ph.D](https://www.uwb.edu/engineering-math/faculty/electrical-engineering/haintablian).
