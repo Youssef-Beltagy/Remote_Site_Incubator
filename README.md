@@ -1,11 +1,11 @@
 # Progress Report for RSI
 ### By **Youssef Beltagy** and **Mike Miller**
 
-This is the documentation for the Remote site Incubator (RSI) project. For up to date information on my daily suffering, please go to the [Progress Reports Folder.]([https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Progress%20Reports](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Progress Reports))
+This is the documentation for the Remote site Incubator (RSI) project. For up to date information on my daily suffering, please go to the [Progress Reports Folder.](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Progress%20Reports)
 
 
 
-The most up to date code is the [Sensor_Network.ino]([https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/esp32%20code/Sensor_Network](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/esp32 code/Sensor_Network)) in the esp32 code Folder. I may have uploaded it in the middle of a debugging session, so it doesn't necessarily work, cheers!
+The most up to date code is the [Sensor_Network.ino](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/esp32%20code/Sensor_Network) in the esp32 code Folder. I may have uploaded it in the middle of a debugging session, so it doesn't necessarily work, cheers!
 
 
 
