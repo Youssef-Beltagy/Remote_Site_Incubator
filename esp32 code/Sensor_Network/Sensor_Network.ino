@@ -194,7 +194,7 @@ namespace FlowMeter{
         ++flowPulses;
     }
 
-    double getFlow(){
+    float getFlow(){
   
         flowPulses = 0;// reset counter 
         
@@ -207,7 +207,7 @@ namespace FlowMeter{
         
         detachInterrupt(digitalPinToInterrupt(FlowMeter::flowPin));
 
-        double flow = (double) flowPulses/ (double) (secToAvg);
+        float flow = (float) flowPulses/ (float) (secToAvg);
 
         flowPulses = 0;
         
@@ -218,6 +218,7 @@ namespace FlowMeter{
 
         FlowMeter::secToAvg = tmpsecToAvg;
         FlowMeter::flowPin = tmpflowPin;
+        FlowMeter::flowPulses = 0;
 
         pinMode(FlowMeter::flowPin, INPUT);
       
@@ -322,8 +323,7 @@ namespace FishCounter{
 #include <Wire.h> // for RTC module
 #include "RTClib.h"
 
-// Include the libraries we need
-#include <OneWire.h>
+#include <OneWire.h>// For the thermometer
 #include <DallasTemperature.h>
 
 #include <SPI.h>// For SD card module
@@ -416,8 +416,8 @@ void setup(){
       display.println("Error: Could not read temp");
     }
 
-    FlowMeter::setFlowMeterValues(25, 1);
-    FishCounter::setFishCounterValues(4, 10, 1000);
+    FlowMeter::setFlowMeterValues(32, 1);
+    FishCounter::setFishCounterValues(34, 10, 1000);
 
     display.display();
 }
