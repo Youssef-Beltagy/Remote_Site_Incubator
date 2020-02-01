@@ -10,15 +10,15 @@ The SIM Card has arrived! I can start attempting some fancy stuff.
 
 ### Objectives
 
-- [ ] ADD the GSM module
+- [ ] ADD the GSM module--could be redundant because I will be using 2G which is mostly too old.
 
-- [ ] Figure out how I'm going to get the data from 
+- [x] Figure out how I'm going to get the data from the esp32 to a server-thingspeak by matlab
 
 - [ ] ADD low power mode
 
-- [ ] Begin next week's report
+- [x] Begin next week's report
 
-- [ ] Clean the Code a little
+- [x] Clean the Code a little
 
   
 
@@ -26,8 +26,12 @@ The SIM Card has arrived! I can start attempting some fancy stuff.
 
 - [ ] ADD PH Sensor
 
-- [ ] See If I can make Classes and use OOP with ISR instead of this namespace festival
+- [x] See If I can make Classes and use OOP with ISR instead of this namespace festival
 
-  
+  No conclusion yet, but it is too early to worry about that now.
+
+- [ ] ADD Dissolved oxygen sensor
 
 ### Notes
+
+Apparently GSM is 2G which is not well supported in the US. Now, I have to get another module. The funny thing is that I kind of expected that issue but ignored it.

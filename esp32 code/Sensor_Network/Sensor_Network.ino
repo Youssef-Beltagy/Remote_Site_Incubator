@@ -170,33 +170,21 @@ void testFileIO(fs::FS &fs, const char * path){
 // I need to solve this namespace issue because it is crippling. I want to be able to make classes with instances.
 namespace FlowMeter{
 
-//    FlowMeter(){}
-//
-//    FlowMeter(uint8_t tmpflowPin, uint8_t tmpsecToAvg){
-//        FlowMeter::secToAvg = tmpsecToAvg;
-//        FlowMeter::flowPin = tmpflowPin;
-//
-//        pinMode(FlowMeter::flowPin, INPUT);
-//    }
+    uint8_t secToAvg = 1; // seconds to measure flow and get average
+    
+    uint8_t flowPin = 2; // flowmeter pin with default = 2 
 
-//    FlowMeter(uint8_t flowPin){
-//          FlowMeter(flowPin, 1); // the default sampling time is one second
-//    }
+    static volatile uint16_t flowPulses = 0; // number of flow-meter pulses
 
-
-    uint8_t secToAvg; // seconds to measure flow and get average          //
-                                                                                         //
-    uint8_t flowPin; // flowmeter pin 
-
-    static volatile uint16_t flowPulses; // number of flow-meter pulses
-
-    static void incrementPulses(){       
+    void incrementPulses(){       
         ++flowPulses;
     }
 
     float getFlow(){
   
-        flowPulses = 0;// reset counter 
+        flowPulses = 0;// reset counter
+
+        pinMode(FlowMeter::flowPin, INPUT);
         
         attachInterrupt(digitalPinToInterrupt(FlowMeter::flowPin), incrementPulses, RISING);
 
@@ -226,7 +214,6 @@ namespace FlowMeter{
 
 };
 
-
 //---------------------------------------------------------------------------------Make another library later----------------------------------------------------------
 // I want to make this a class
 // This is no longer a class
@@ -238,15 +225,15 @@ namespace FlowMeter{
 // This might solve the flowmeter issue as well, interesting. For now, I need to switch to computer vision within 15 minutes.
 namespace FishCounter{
 
-    uint8_t counterPin;
+    uint8_t counterPin = 3;
 
-    long lowerTimeThr;
+    long lowerTimeThr = 5;
 
-    long upperTimeThr;
+    long upperTimeThr = 1000;
 
-    volatile unsigned long mtime;
+    volatile unsigned long mtime = millis();
 
-    volatile uint16_t fishCount;
+    volatile uint16_t fishCount = 0;
 
     void countFish() {
         if(digitalRead(counterPin) == HIGH){// What about if LOW and time is not
@@ -273,16 +260,6 @@ namespace FishCounter{
         attachInterrupt(digitalPinToInterrupt(counterPin), countFish, CHANGE);
           
     }
-    
-    
-//    FishCounter(){}
-
-//    If I try to initialize static member variables, I get compile erros.
-//    FishCounter(uint8_t counterPin, long lowerTimeThr, long upperTimeThr){
-//
-//      setValues(counterPin, lowerTimeThr, upperTimeThr);
-//      
-//    }
 
     uint16_t getFishCount(){
       return fishCount;
@@ -444,11 +421,12 @@ void loop(){
     display.print('/');
     display.print(now.month(), DEC);
     display.print('/');
-    display.println(now.day(), DEC);
+    display.print(now.day(), DEC);
     
     
     display.display();
-    
+
+    display.print(" ");
     display.print(now.hour(), DEC);
     display.print(':');
     display.print(now.minute(), DEC);
@@ -463,6 +441,62 @@ void loop(){
     display.print("Temp: ");
     display.println(tempC);
     display.display();
+
+
+//------------------------------------------------------------------------
+    File file = SD.open("/readings.txt", FILE_APPEND);
+    if(!file){
+        display.println("Failed to open file for writing");
+    }else{
+        bool writtenToFile = true;
+
+        writtenToFile = writtenToFile && file.print(now.year(), DEC);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.print(now.month(), DEC);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.print(now.day(), DEC);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.print(now.hour(), DEC);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.print(now.minute(), DEC);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.print(now.second(), DEC);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.print(flow);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.print(count);
+        writtenToFile = writtenToFile && file.print(", ");
+        writtenToFile = writtenToFile && file.println(tempC);
+        
+
+        if(writtenToFile){
+            display.println("File written");
+        } else {
+            display.println("Write failed");
+        }
+        file.close();
+    }
+
+    display.display();
+
+    
+   //-----------------------------------------------------------------------------------
+
+    //listDir(SD, "/", 0);
+    //createDir(SD, "/mydir");
+    //listDir(SD, "/", 0);
+    //removeDir(SD, "/mydir");
+    //listDir(SD, "/", 2);
+    //writeFile(SD, "/hello.txt", "Hello ");
+    //appendFile(SD, "/readings.txt", now.year());
+    //appendFile(SD, "/readings.txt", flow + "," + count + "," + tempc + "\n");
+    //readFile(SD, "/hello.txt");
+    //deleteFile(SD, "/foo.txt");
+    //renameFile(SD, "/hello.txt", "/foo.txt");
+    //readFile(SD, "/foo.txt");
+    //testFileIO(SD, "/test.txt");
+    Serial.printf("Total space: %lluMB\n", SD.totalBytes() / (1024 * 1024));
+    Serial.printf("Used space: %lluMB\n", SD.usedBytes() / (1024 * 1024));
 
 //  //--------------------------------------------------delete before deployment
 //  Serial.println("Last Reading:");
@@ -484,54 +518,4 @@ void loop(){
 //
 //
 //  //----------------------------------------------------------------------------------------
-//
-//
-//
-
-//
-//  
-//  // After we got the temperatures, we can print them here.
-//  // We use the function ByIndex, and as an example get the temperature from the first sensor only.
-//  
-//
-//
-//
-//  //---------------------------------------------------------------------------------------
-//  
-//
-//  // open the file. Only one file can be open at a time,
-//  // so you have to close this one before opening another.
-//  // I know that now you can open more than one at the same
-//  // time, but when I used to do it, I would get corrupted
-//  // data after some time.
-//  
-//  myFile = SD.open("TDATA.txt", FILE_WRITE);
-//
-//  if(!myFile){//---------------------file checking doesn't work if I remove sd card in middle of operation.-----test why
-//    display.println("File Write Failed");
-//    display.display();
-//  }else{
-//    display.println("Can Write to File");
-//    display.display();
-//    
-//    myFile.print(now.year(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.month(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.day(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.hour(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.minute(), DEC);
-//    myFile.print(',');
-//    myFile.print(now.second(), DEC);
-//    myFile.print(',');
-//    myFile.print(count);
-//    myFile.print(',');
-//    myFile.println(flow);
-//    
-//    myFile.close();
-//  }
-
-
 }
