@@ -16,7 +16,7 @@ I discovered the existence of Matlab's ThingSpeak, so we will use that for our s
 
 ### Objectives
 
-- [ ] WiFi + ThingSpeak
+- [x] WiFi + ThingSpeak
 
 - [ ] ADD low power mode
 
@@ -44,3 +44,10 @@ I discovered the existence of Matlab's ThingSpeak, so we will use that for our s
 
 ### Notes
 
+I want a pin to control the current going to the sensors. Apparently, I can disconnect them and reconnect them without issues.
+
+Apparently, the fishcounter (implemented as volatile int that is incremented by an ISR) doesn't work in light sleep mode. My guess is this is because the processor is sleeping so the ISR is not working. A solution would be to set the interrupt pin as a wakeup signal. My concern would be whether the esp32 can wakeup and notice the interrupt at the same time. It may not be able to do that.
+
+I mean that by the time the esp32 wakes up, the signal would already be high. Then the ISR won't be triggered and the fishcount would be incorrect.
+
+What I want would be for the esp32 to wakeup and trigger the ISR at the same time. Then the ISR would increment the fish and put the esp32 to sleep again.

@@ -8,16 +8,26 @@ const long UpperTimeThr = 1000;
 
 void setup() {
 
-  Serial.begin(9600);
-  Serial.print("S");
+  Serial.begin(115200);
+  //Serial.print("S");
   pinMode(interruptPin, INPUT);
   attachInterrupt(digitalPinToInterrupt(interruptPin), increment, CHANGE);
+  esp_sleep_enable_timer_wakeup(10000000);
+
 }
 
 void loop() {
-  
+  //delay(1000);
   Serial.print("C:");
   Serial.println((int)count);
+
+
+  //If you were to use ext1, you would use it like
+  //esp_sleep_enable_ext1_wakeup(BUTTON_PIN_BITMASK,ESP_EXT1_WAKEUP_ANY_HIGH);
+
+  //Go to sleep now
+  //Serial.println("Going to sleep now");
+  esp_light_sleep_start();
 
 }
 

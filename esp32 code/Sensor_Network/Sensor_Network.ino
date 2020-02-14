@@ -233,7 +233,7 @@ namespace FishCounter{
 
     volatile unsigned long mtime = millis();
 
-    volatile uint16_t fishCount = 0;
+    RTC_DATA_ATTR volatile uint16_t fishCount = 0;
 
     void countFish() {
         if(digitalRead(counterPin) == HIGH){// What about if LOW and time is not
@@ -249,7 +249,7 @@ namespace FishCounter{
     void setFishCounterValues(uint8_t tmpcounterPin, long tmplowerTimeThr, long tmpupperTimeThr){
     
         counterPin = tmpcounterPin;
-        fishCount = 0;
+        //fishCount = 0;
     
         lowerTimeThr = tmplowerTimeThr;
         upperTimeThr = tmpupperTimeThr;
@@ -290,11 +290,6 @@ namespace FishCounter{
 
 
 
-
-
-
-
-
 #include <stdint.h>// for clarity in data types
 
 #include <Wire.h> // for RTC module
@@ -309,6 +304,14 @@ namespace FishCounter{
 #include <Adafruit_GFX.h> // For OLED display
 #include <Adafruit_SSD1306.h>
 
+#include <WiFi.h> // for connecting to the server
+#include "ThingSpeak.h"
+
+// delete before uploading to github and repopulate again next time--------------------------------------------------------------------
+const char* ssid     = "";
+const char* password = "";
+const uint32_t channel = 0;
+const char* writeKey = "";
 
 
 RTC_DS3231 rtc; // initialize clock
@@ -322,10 +325,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 // Pass our oneWire reference to Dallas Temperature. 
 DallasTemperature sensors(&oneWire);
 
-//FlowMeter flowmeter;
-
-//FishCounter fishcounter;
-
+WiFiClient  client;
 
 void setup(){
 
@@ -397,12 +397,41 @@ void setup(){
     FishCounter::setFishCounterValues(34, 10, 1000);
 
     display.display();
+
+
+    WiFi.begin(ssid, password);
+    display.print("Connecting to Wifi:");
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        display.print(".");
+        display.display();
+    }
+
+    WiFi.mode(WIFI_STA);
+    ThingSpeak.begin(client);
+
+    delay(1000);
+
 }
 
 void loop(){
 
+  //---------------------------------------I probably need to redo this after each sleeping cycle
+  SD.begin();
+  WiFi.begin(ssid, password);
+    display.print("Connecting to Wifi:");
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+    }
+
+    WiFi.mode(WIFI_STA);
+    ThingSpeak.begin(client);
+
+  
+
 //   get sensor data
-    double flow = FlowMeter::getFlow();
+    float flow = FlowMeter::getFlow();
     uint16_t count = FishCounter::getFishCount();
 
     sensors.requestTemperatures(); // Send the command to get temperatures
@@ -479,6 +508,44 @@ void loop(){
 
     display.display();
 
+
+      // Connect or reconnect to WiFi
+    if(WiFi.status() != WL_CONNECTED){
+      display.print("Attempting to connect to SSID: ");
+      display.println(ssid);
+      while(WiFi.status() != WL_CONNECTED){
+        WiFi.begin(ssid, password);
+        display.print(".");
+        delay(5000);
+        display.display();  
+      } 
+      display.println("\nConnected.");
+      display.display();
+    }
+  
+    ThingSpeak.setField(1, "Time");
+    ThingSpeak.setField(2, flow);
+    ThingSpeak.setField(3, count);
+    ThingSpeak.setField(4, tempC);
+    
+    int x = ThingSpeak.writeFields(channel, writeKey);
+    
+    // Check the return code
+    if(x == 200){
+      display.println("Channel update successful.");
+    }
+    else{
+      display.println("Problem updating channel. HTTP error code " + String(x));
+    }
+
+    display.display();
+    
+    //delay(20000); // Wait 20 seconds before sending a new value
+
+    esp_sleep_enable_timer_wakeup(200000000);
+    esp_light_sleep_start();
+
+
     
    //-----------------------------------------------------------------------------------
 
@@ -495,8 +562,8 @@ void loop(){
     //renameFile(SD, "/hello.txt", "/foo.txt");
     //readFile(SD, "/foo.txt");
     //testFileIO(SD, "/test.txt");
-    Serial.printf("Total space: %lluMB\n", SD.totalBytes() / (1024 * 1024));
-    Serial.printf("Used space: %lluMB\n", SD.usedBytes() / (1024 * 1024));
+    //Serial.printf("Total space: %lluMB\n", SD.totalBytes() / (1024 * 1024));
+    //Serial.printf("Used space: %lluMB\n", SD.usedBytes() / (1024 * 1024));
 
 //  //--------------------------------------------------delete before deployment
 //  Serial.println("Last Reading:");

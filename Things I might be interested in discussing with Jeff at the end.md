@@ -1,0 +1,7 @@
+- Hologram ~5
+- GSM ~10
+- clock ~7.7
+- esp32 ~20
+- temp ~7
+- 
+- 
