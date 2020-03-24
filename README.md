@@ -49,11 +49,19 @@ We went with Jeff to see where the first RSI (the one that will be deployed in J
 
 To avoid overflowing the Remote Site Incubator, we redesigned the fish-counter housing to increase its empty cross-sectional area. We want to allow a bigger area for the water to flow without interruptions. To do that without increasing the size of the housing, we split the trapezoids that focus the fish into the light-gate into vertical bars. This allows water to pass between the bars but still force the fish to go through the light-gate.
 
+This image shows the concept of the new design.
+
+![Fish-counter housing](https://raw.githubusercontent.com/Youssef-Beltagy/Remote_Site_Incubator/master/Images/New_Design.jpg)
+
 We decided to use the cellular network for internet access because satellite internet would be needlessly expensive. We bought a GSM module and were going to use it, but we couldn't because GSM is 2G, and 2G is mostly no longer used in the US. We found another [module](https://www.adafruit.com/product/3147) that allows us to use 3G, but it is too expensive for us to buy on our own since our budget expired in December. We are solving the problem in steps though, so right now the sensor-system uses Wifi.
 
 The sensor system now reads sensor data and uploads it online. We used MathWorks's ThingSpeak for our server side. ThingSpeak stores and displays the sensor data online.
 
-We were ready to deploy the sensor system around the second week of February. It would have been the ultimate test. But we couldn't because all our 3D prints failed. Printing delayed us at least two weeks. During that time, the fish hatched and left the incubator.
+We were ready to deploy the sensor system around the second week of February. It would have been the ultimate test. But we couldn't because all our 3D prints of the fish-counter sensor housing failed. Printing delayed us at least two weeks. During that time, the fish hatched and left the incubator.
+
+This is a print job that was almost successful.
+
+![Failed print attempt](https://raw.githubusercontent.com/Youssef-Beltagy/Remote_Site_Incubator/master/Images/Failed_Print.jpg)
 
 But we are still working on the remote functionality. We need the sensor-system to consume the least current possible. So we want the sensor-system to sleep between readings. The issue is that the fish-counting sensor uses interrupts. So if the Microprocessor sleeps, the sensor-system won't count fish.
 
@@ -64,11 +72,9 @@ We came up with a few solutions:
 - Have the fish-counter return two signals. One would be delayed a few milliseconds from the other. The first signal would wake up the microcontroller. The delayed signal would be used to count the fish.
 - Use the same signal to wake up the microcontroller and count the fish. This is a heuristic approach that would need a lot of testing before we can be sure it works.
 
+Right now, we are attempting the first two solutions and writing the users' manual.
 
-
-
-
-![Failed Print of the fish-counter housing](https://imgur.com/DqwQ7UK)
+It is unclear how this project will be continued, but I (Youssef) want to work on it again next year.
 
 ### Demo
 
@@ -95,9 +101,9 @@ Organized by category
 ### Data Collection and Transmission
 + [ ] Research and add a module for remote communication (please see the appendix)
 + [x] Widen the fish-counter sensor and make more of it
-+ [ ] Add the Turbidity Sensor
-+ [ ] Add the PH Sensor
-+ [ ] Add the Dissolved Oxygen Sensor
++ [x] Add the Turbidity Sensor (Decided against it because its readings are too raw)
++ [x] Add the PH Sensor (Decided against it because the sensor is bulky)
++ [x] Add the Dissolved Oxygen Sensor (Decided against it because the sensor is bulky)
 
 
 ### Data Integrity
@@ -113,7 +119,7 @@ Organized by category
 
 ### Usability and Maintainability
 + [x] Clean the code and refactor it
-+ [ ] Make classes and libraries for the flow-meter and fish-counter
++ [x] Make classes and libraries for the flow-meter and fish-counter (Because I'm using interrupts and static data members, making classes is somewhat unrealistic. I organized the code with namespaces. If I find a design pattern or a way to use classes, I will use it.)
 + [ ] Document how to use the system and put everything in one location so Jeff can easily use it
 + [ ] Make it really easy to use so Jeff would give it to others as well
 
@@ -155,18 +161,16 @@ We added this sensor. You can connect tens of these sensors to one pin.
 
 **Turbidity**
 
-We have not added The Turbidity sensor yet. This sensor can be calibrated, but it was tested with 5V input. If we can't supply and measure 5V, this sensor might become tricky.
+We decided not to to include this sensor because its readings would be too raw and meaningless. Without researching on how to make sense of the readings, this sensor is redundant.
 
 
 **PH**
 
-We have not added the PH sensor yet.
-
+We decided not to include this sensor because it is too bulky.
 
 **Dissolved Oxygen**
 
-This sensor needs Maintenance every month or so.
-
+We decided not to include this sensor because it is too bulky.
 
 **SD card module**
 
