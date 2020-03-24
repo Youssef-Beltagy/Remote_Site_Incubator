@@ -1,4 +1,4 @@
-## Week 4 Report (2/1 - 2/7)
+## Week 4 Report (2/8 - 2/14)
 
 ### Deadline 2/15/2020 (EOD)
 
@@ -12,7 +12,7 @@ Our objective now is to get something that works to Jeff. We want to have been o
 
 ### Objectives
 
-- [ ] Improve the code( error logging and testing)
+- [ ] Improve the code (error logging and testing)
 
   I don't think I have to do that yet. I would prefer to focus on adding more features for now.
 
@@ -25,6 +25,8 @@ Our objective now is to get something that works to Jeff. We want to have been o
   I'm making progress. See notes.
 
 - [ ] show mike how to make the connections.
+
+  I can't do that because we don't have the sensors.
 
 
 

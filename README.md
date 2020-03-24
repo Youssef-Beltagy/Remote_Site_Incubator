@@ -1,15 +1,7 @@
 # Progress Report for RSI
 ### By **Youssef Beltagy** and **Mike Miller**
 
-This is the documentation for the Remote site Incubator (RSI) project. For up to date information on my daily suffering, please go to the [Progress Reports Folder.](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/Progress%20Reports)
-
-
-
-The most up to date code is the [Sensor_Network.ino](https://github.com/Youssef-Beltagy/Remote_Site_Incubator/tree/master/esp32%20code/Sensor_Network) in the esp32 code Folder. I may have uploaded it in the middle of a debugging session, so it doesn't necessarily work, cheers!
-
-
-
-I love my life.
+This is the documentation for the Remote site Incubator (RSI) project.
 
 ## Objective 
 We want to build a sensor-system to observe and document the hatching conditions of fish. For now, we know that we need to deploy a prototype for Coho salmon sometime in February of 2020. Later on, the sensor system will be used to observe Kokanee salmon in Lake Washington/Sammamish watershed. This project is sponsored by [Jeff Jensen, Ph.D](https://www.uwb.edu/biological-sciences/faculty/biology/jjensen), and supervised by [Hrair Aintablian, Ph.D](https://www.uwb.edu/engineering-math/faculty/electrical-engineering/haintablian).
@@ -44,7 +36,7 @@ Ideally, we would also like to make a user-friendly interface. But our focus is 
 
 
 
-## Progress
+## Progress In Autumn 2019
 In this quarter, we managed to build the custom fish-counter sensor and wrote the code for it. We tested the fish-counter to the best of our abilities. The only remaining tests are with a dead fish (to simulate a living one) and testing on the field.
 
 We made a prototype for the data collection system, using an Arduino Mega, that we can deploy (but is far from perfect). We currently have the first two sensors, the fish-counter and the flow meter. The sensors' data is time-stamped with a real-time-clock module, and saved to an SD card. To get feedback about the system while we are on-site, we have a small monitor that shows what the last readings were.
@@ -52,6 +44,31 @@ We made a prototype for the data collection system, using an Arduino Mega, that 
 We demoed what we had to Jeff and got his feedback. Jeff explained that the fish-counter might be too narrow and can cause the incubator to overfill with water and overflow. We will have to widen the 3d-printed tube of the fish-counter and use multiple fish-counters. Jeff told us that the next most important thing to him now is to add the remote functionality. 
 
 We went with Jeff to see where the first RSI (the one that will be deployed in January) will be located. Fortunately, for the first deployment, we will have access to a power socket so we can focus on the data-collection and transmission system for now. When we have a satisfactory data collection and transmission system, we will focus on finding a solution to the power challenge.
+
+## Progress In Winter 2020
+
+To avoid overflowing the Remote Site Incubator, we redesigned the fish-counter housing to increase its empty cross-sectional area. We want to allow a bigger area for the water to flow without interruptions. To do that without increasing the size of the housing, we split the trapezoids that focus the fish into the light-gate into vertical bars. This allows water to pass between the bars but still force the fish to go through the light-gate.
+
+We decided to use the cellular network for internet access because satellite internet would be needlessly expensive. We bought a GSM module and were going to use it, but we couldn't because GSM is 2G, and 2G is mostly no longer used in the US. We found another [module](https://www.adafruit.com/product/3147) that allows us to use 3G, but it is too expensive for us to buy on our own since our budget expired in December. We are solving the problem in steps though, so right now the sensor-system uses Wifi.
+
+The sensor system now reads sensor data and uploads it online. We used MathWorks's ThingSpeak for our server side. ThingSpeak stores and displays the sensor data online.
+
+We were ready to deploy the sensor system around the second week of February. It would have been the ultimate test. But we couldn't because all our 3D prints failed. Printing delayed us at least two weeks. During that time, the fish hatched and left the incubator.
+
+But we are still working on the remote functionality. We need the sensor-system to consume the least current possible. So we want the sensor-system to sleep between readings. The issue is that the fish-counting sensor uses interrupts. So if the Microprocessor sleeps, the sensor-system won't count fish.
+
+We came up with a few solutions:
+
+- Use the esp32's low power processor.
+- Add a hardware counter that would act as a buffer between the fish-counter and the micro-processor. The esp32 would read and reset the value of the counter when it wakes up.
+- Have the fish-counter return two signals. One would be delayed a few milliseconds from the other. The first signal would wake up the microcontroller. The delayed signal would be used to count the fish.
+- Use the same signal to wake up the microcontroller and count the fish. This is a heuristic approach that would need a lot of testing before we can be sure it works.
+
+
+
+
+
+![Failed Print of the fish-counter housing](https://imgur.com/DqwQ7UK)
 
 ### Demo
 
