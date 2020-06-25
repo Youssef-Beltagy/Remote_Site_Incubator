@@ -1,4 +1,0 @@
-
-Make prototype.
-
-Make a Library.
