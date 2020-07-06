@@ -303,23 +303,30 @@
 #include <WiFi.h> // for connecting to the server
 #include <ThingSpeak.h>
 
-#include "FishCounter.h"
+#include <FishCounterAndSleep.h>
 
-namespace fcih = FishCounterAndInterruptHandling;
+namespace fcs = FishCounterAndSleep;
 
 #ifdef FISHCOUNTER_DEBUG
 int RTC_DATA_ATTR bootCount;
 #endif // FISHCOUNTER_DEBUG
 
-void setup(){  
+void setup(){ 
+
+  fcs::process_wakeup();
+  delay(10); //========================= 
   
   #ifdef FISHCOUNTER_DEBUG
   bootCount++;
   Serial.println("Boot number: " + String(bootCount));
-  Serial.println("Fish number: " + String(fcih::fishCount));
+  Serial.println("Fish number: " + String(fcs::fishCount));
+  Serial.println("micros(): " + micros());//===================causes exceptions, I think. The symptoms are consecutive rebooting.
+  //================================ check: https://github.com/espressif/arduino-esp32/issues/1357
   #endif // FISHCOUNTER_DEBUG
 
-  /*
+  fcs::sleep();
+
+  /* =====================================research more
   First we configure the wake up source
   We set our ESP32 to wake up for an external trigger.
   There are two types for ESP32, ext0 and ext1 .
