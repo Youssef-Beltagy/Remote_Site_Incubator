@@ -5,9 +5,6 @@
 // const uint32_t channel = 0;
 // const char* writeKey = "";
 
-
-// RTC_DS3231 rtc; // initialize clock
-
 // Adafruit_SSD1306 display(128, 64, &Wire); // initialize OLED display
 
 // const uint8_t ONE_WIRE_BUS = 2;
@@ -279,72 +276,63 @@
 // //  //----------------------------------------------------------------------------------------
 // }
 
-// //=====================================================================+++++++++++++++++++++++++++++++++++++++++++++++++++
-#define FISHCOUNTER_DEBUG
-
-#include <Arduino.h> // For using Arduino Framework
-
-#include <stdint.h>// for clarity in data types
-
-#include "FS.h"// For using a filesystem for the SD Card
-#include "SD.h"// For the SD Card
-#include "SPI.h"// Serial Peripheral Interface for the SD Card
-#include "SDCard.h"
-
-#include <Wire.h> // I2C protocol for the RTC module
-#include "RTClib.h" // For the RTC module
-
-#include <OneWire.h>// For the thermometer
-#include <DallasTemperature.h>// For the thermometers
-
-#include <Adafruit_GFX.h> // For OLED display
-#include <Adafruit_SSD1306.h>
-
-#include <WiFi.h> // for connecting to the server
-#include <ThingSpeak.h>
-
-#include <FishCounterAndSleep.h>
+//TODO: it is better to define include settings in here and include fishcounterandsleep in settings.
+//Might cause a recursive include kind of thing
+#include "Settings.h"
 
 namespace fcs = FishCounterAndSleep;
 
-#ifdef FISHCOUNTER_DEBUG
-int RTC_DATA_ATTR bootCount;
-#endif // FISHCOUNTER_DEBUG
+#ifdef SET_TIME
+
+void setup(){
+  rtc.begin();
+  rtc.adjust(DateTime(__DATE__, __TIME__));
+}
+
+void loop(){
+}
+
+#else
 
 void setup(){ 
 
   fcs::process_wakeup();
-  delay(10); //========================= 
-  
   #ifdef FISHCOUNTER_DEBUG
   bootCount++;
   Serial.println("Boot number: " + String(bootCount));
   Serial.println("Fish number: " + String(fcs::fishCount));
-  Serial.println("micros(): " + micros());//===================causes exceptions, I think. The symptoms are consecutive rebooting.
+
+  DateTime now = rtc.now(); // get current time
+
+      // print reading to OLED screen
+    Serial.print("Time: ");
+    Serial.print(now.year(), DEC);
+    Serial.print('/');
+    Serial.print(now.month(), DEC);
+    Serial.print('/');
+    Serial.print(now.day(), DEC);
+    Serial.print(" ");
+    Serial.print(now.hour(), DEC);
+    Serial.print(':');
+    Serial.print(now.minute(), DEC);
+    Serial.print(':');
+    Serial.println(now.second(), DEC);
+
   //================================ check: https://github.com/espressif/arduino-esp32/issues/1357
   #endif // FISHCOUNTER_DEBUG
 
   fcs::sleep();
-
-  /* =====================================research more
-  First we configure the wake up source
-  We set our ESP32 to wake up for an external trigger.
-  There are two types for ESP32, ext0 and ext1 .
-  ext0 uses RTC_IO to wakeup thus requires RTC peripherals
-  to be on while ext1 uses RTC Controller so doesnt need
-  peripherals to be powered on.
-  Note that using internal pullups/pulldowns also requires
-  RTC peripherals to be turned on.
-  */
-  
- 
-
-
-  
-
-  
 }
+
 
 void loop(){
   //This is not going to be called
+
+  //TODO: delete 
+  #ifdef FISHCOUNTER_DEBUG
+    Serial.println("Fish number: " + String(fcs::fishCount));  
+  //================================ check: https://github.com/espressif/arduino-esp32/issues/1357
+  #endif // FISHCOUNTER_DEBUG
 }
+
+#endif // SET_TIME
